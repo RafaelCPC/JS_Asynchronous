@@ -2,32 +2,29 @@
 try to better handle all errors through 
 the Error class and the catch method. Also add the finally method.*/
 const isLogged = true;
-let rand= Math.random();
-let obj= {name: "John", age: 24};
-function pPromesa () {
-   return new Promise((resolve,reject) => {
-        setTimeout(() => {
 
-        if(isLogged==true){
-            resolve(rand);
-        }else{
-            reject(new Error("user is not logged"));
-        }
-    },500);
-    })
-}
-function sPromesa(rand) {
+function logged (isLogged){
     return new Promise ((resolve, reject) => {
-        setTimeout(() => {
-            if (rand>0.5) {
-                resolve(console.log(obj))
-            } else{
-                reject(new Error ("random number is <0.5"))
-            }
-        },500);
-    })
+        if (isLogged == true) {
+            resolve(Math.random());
+        } else {
+            reject(new Error ("error"));
+        }
+    }
+    );
 }
-pPromesa()
-    .then(sPromesa)
-    .catch()
+function sFunction (number){
+    return new Promise ((resolve, reject) => {
+         if(number > 0.5) {
+            resolve({name: "John", age: 24})
+        } else {
+            reject(new Error ("error 2"))
+        }
+    }  
+    )
+}
+logged(isLogged)
+    .then((random) => sFunction(random))
+    .then ((resolve) => console.log(resolve))
+    .catch((error) => console.log(error))
     .finally(() => console.log("finally!"))
